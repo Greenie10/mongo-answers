@@ -11,9 +11,10 @@ module.exports = buildSchema(`
 
     type Event {
       _id: ID!
-      title: String!
+      question: String!
       description: String!
-      price: Float!
+      location: String!
+      gardener: String!
       date: String!
       creator: User!
     }
@@ -32,9 +33,10 @@ module.exports = buildSchema(`
     }
 
     input EventInput {
-      title: String!
+      question: String!
       description: String!
-      price: Float!
+      location: String!
+      gardener: String!
       date: String!
     }
 

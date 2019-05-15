@@ -16,8 +16,9 @@ class EventsPage extends Component {
 
   constructor(props) {
     super(props);
-    this.titleElRef = React.createRef();
-    this.priceElRef = React.createRef();
+    this.questionElRef = React.createRef();
+    this.locationElRef = React.createRef();
+    this.gardenerElRef = React.createRef();
     this.dateElRef = React.createRef();
     this.descriptionElRef = React.createRef();
   }
@@ -32,32 +33,35 @@ class EventsPage extends Component {
 
   modalConfirmHandler = () => {
     this.setState({ creating: false });
-    const title = this.titleElRef.current.value;
-    const price = +this.priceElRef.current.value;
+    const question = this.questionElRef.current.value;
+    const location = this.locationElRef.current.value;
+    const gardener = this.gardenerElRef.current.value;
     const date = this.dateElRef.current.value;
     const description = this.descriptionElRef.current.value;
 
     if (
-      title.trim().length === 0 ||
-      price <= 0 ||
+      question.trim().length === 0 ||
+      location.trim().length === 0 ||
+      gardener.trim().length === 0 ||
       date.trim().length === 0 ||
       description.trim().length === 0
     ) {
       return;
     }
 
-    const event = { title, price, date, description };
+    const event = { question, location, gardener, date, description };
     console.log(event);
 
     const requestBody = {
       query: `
           mutation {
-            createEvent(eventInput: {title: "${title}", description: "${description}", price: ${price}, date: "${date}"}) {
+            createEvent(eventInput: {question: "${question}", description: "${description}", location: "${location}", gardener: "${gardener}", date: "${date}"}) {
               _id
-              title
+              question
               description
               date
-              price
+              location
+              gardener
               creator {
                 _id
                 email
@@ -101,10 +105,11 @@ class EventsPage extends Component {
         query {
           events {
             _id
-            title
+            question
             description
             date
-            price
+            location
+            gardener
             creator {
               _id
               email
@@ -142,7 +147,7 @@ class EventsPage extends Component {
     const eventList = this.state.events.map(event => {
       return (
         <li key={event._id} className="events__list-item">
-          {event.title}
+          {event.question}
         </li>
       );
     });
@@ -159,12 +164,16 @@ class EventsPage extends Component {
           >
             <form>
               <div className="form-control">
-                <label htmlFor="title">Title</label>
-                <input type="text" id="title" ref={this.titleElRef} />
+                <label htmlFor="question">Title</label>
+                <input type="text" id="question" ref={this.questionElRef} />
               </div>
               <div className="form-control">
-                <label htmlFor="price">Price</label>
-                <input type="number" id="price" ref={this.priceElRef} />
+                <label htmlFor="location">Location</label>
+                <input type="text" id="location" ref={this.locationElRef} />
+              </div>
+              <div className="form-control">
+                <label htmlFor="gardener">Gardener</label>
+                <input type="text" id="gardener" ref={this.gardenerElRef} />
               </div>
               <div className="form-control">
                 <label htmlFor="date">Date</label>

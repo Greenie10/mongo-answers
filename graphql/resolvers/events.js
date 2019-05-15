@@ -18,9 +18,10 @@ module.exports = {
       throw new Error("Unauthenticated!");
     }
     const event = new Event({
-      title: args.eventInput.title,
+      question: args.eventInput.question,
       description: args.eventInput.description,
-      price: +args.eventInput.price,
+      location: args.eventInput.location,
+      gardener: args.eventInput.gardener,
       date: new Date(args.eventInput.date),
       creator: req.userId
     });
