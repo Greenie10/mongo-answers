@@ -1,5 +1,6 @@
 const Event = require("../../models/event");
 const User = require("../../models/user");
+const Gardener = require("../../models/gardener");
 const { dateToString } = require("../../helpers/date");
 
 const events = async eventIds => {
@@ -13,10 +14,30 @@ const events = async eventIds => {
   }
 };
 
+const gardeners = async gardenerIds => {
+  try {
+    const gardeners = await Gardener.find({ _id: { $in: gardenerIds } });
+    return gardeners.map(gardener => {
+      return transformGardener(gardener);
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
 const singleEvent = async eventId => {
   try {
     const event = await Event.findById(eventId);
     return transformEvent(event);
+  } catch (err) {
+    throw err;
+  }
+};
+
+const singleGardener = async gardenerId => {
+  try {
+    const gardener = await Gardener.findById(gardenerId);
+    return transformEvent(gardener);
   } catch (err) {
     throw err;
   }
@@ -44,6 +65,13 @@ const transformEvent = event => {
   };
 };
 
+const transformGardener = gardener => {
+  return {
+    ...gardener._doc,
+    _id: gardener.id
+  };
+};
+
 const transformBooking = booking => {
   return {
     ...booking._doc,
@@ -56,6 +84,7 @@ const transformBooking = booking => {
 };
 
 exports.transformEvent = transformEvent;
+exports.transformGardener = transformGardener;
 exports.transformBooking = transformBooking;
 
 // exports.user = user;
