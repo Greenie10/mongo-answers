@@ -1,6 +1,6 @@
 {
-  "name": "mongo-answers",
-  "version": "1.0.0",
+  "name": "amplifyapp",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
